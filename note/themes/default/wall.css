@@ -1,0 +1,135 @@
+.background{
+	background: url("images/home_background.jpg") no-repeat;	
+	width:1440px;
+	height:825px;
+}
+.innerBox{
+	width:1440px;
+	height:825px;
+	position: absolute;
+	font-size: 12px;
+	cursor: pointer;
+	display: block;
+}
+.memo{
+	position: absolute;
+	cursor: default;
+}
+
+.memo .shadow{
+	width:100%;
+	height:100%;
+	position: absolute;
+	background-repeat:no-repeat;
+	background-position: top right;
+}
+.memo .base{
+	width:100%;
+	height:100%;
+	position: absolute;
+	background-repeat:no-repeat;
+}
+.memo .pinshadow{
+	position: absolute;
+	background-repeat:no-repeat;
+	background-position: center;
+	cursor: move;
+	right:10px;
+	display: block;
+}
+.memo .pin{
+	position: absolute;
+	background-repeat:no-repeat;
+	background-position: center;
+	cursor: move;
+	right:10px;
+	display: block;
+}
+.memo .text{
+	line-height:20px;
+	word-wrap: break-word; word-break: normal;
+	overflow: auto;
+	position: absolute;
+	top: 30px;
+	right:10px;
+}
+
+.m-memo{
+	width:207px;
+	height:219px;
+}
+.m-memo .shadow{
+	background-image: url("images/memo_m_shadow.png");
+}
+.m-memo .base{
+	background-position: 25px 7px;
+}
+.m-memo .pinshadow{
+	width:165px;
+	height:34px;
+	background-image:url("images/memo_m_pin_shadow.png");
+}
+.m-memo .pin{
+	width:165px;
+	height:34px;
+	background-image:url("images/memo_m_pin_red.png");
+}
+.m-memo .text{
+	width:165px;
+	height:160px;
+}
+
+.aqua .base{
+	background-image:url("images/memo_m_base_aqua.png");
+}
+.aqua .pin{
+	background-image:url("images/memo_m_pin_red.png");
+}
+
+.blue .base{
+	background-image:url("images/memo_m_base_blue.png");
+}
+
+.green .base{
+	background-image:url("images/memo_m_base_green.png");
+}
+
+.orange .base{
+	background-image:url("images/memo_m_base_orange.png");
+}
+
+.purple .base{
+	background-image:url("images/memo_m_base_purple.png");
+}
+
+.red .base{
+	background-image:url("images/memo_m_base_red.png");
+}
+
+.yellow .base{
+	background-image:url("images/memo_m_base_yellow.png");
+}
+
+.g1 .base{
+	background-image:url("images/memo_m_base_g1.png");
+}
+
+.g2 .base{
+	background-image:url("images/memo_m_base_g2.png");
+}
+
+.g3 .base{
+	background-image:url("images/memo_m_base_g3.png");
+}
+
+.g4 .base{
+	background-image:url("images/memo_m_base_g4.png");
+}
+
+.g5 .base{
+	background-image:url("images/memo_m_base_g5.png");
+}
+
+.g6 .base{
+	background-image:url("images/memo_m_base_g6.png");
+}

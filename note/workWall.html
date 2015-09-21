@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="themes/reset.css" />
+<link rel="stylesheet" type="text/css" href="themes/default/wall.css" />
+<script type="text/javascript" src="js/jquery-1.4.2.js"></script>
+</head>
+<body>
+<div class="background">
+	<div class="innerBox background">
+	</div>
+</div>
+
+<script type="text/javascript">
+
+$(function(){
+	//创建标签,第一个参数为样式，第二为文本
+	function createTip(theme,text){
+		var htmlArr = [];
+		htmlArr.push('<div class="memo m-memo" style="top:0px; left:400px">');
+		htmlArr.push('<div class="shadow"></div>');
+		htmlArr.push('<div class="base"></div>');
+		htmlArr.push('<div class="text"></div>');
+		htmlArr.push('<div class="pinshadow"></div>');
+		htmlArr.push('<div class="pin"></div>');
+		htmlArr.push('</div>');
+		var memo = $(htmlArr.join(""));
+		$(".innerBox").append(memo);
+		memo.addClass(theme||"aqua").find(".text").text(text||"无内容").end().attr( "unselectable", "on" ).css( "MozUserSelect", "none" );
+		zindex++;
+		return memo;
+	}
+	
+	var _touch=false;
+	var _stop;
+	var _sleft;
+	//双击墙壁，新建一个页签
+	$(".innerBox").dblclick(function(e){
+  		if(e.target == this){
+  			var left = e.pageX-$(this).position().left;
+  			var top = e.pageY-$(this).position().top;
+  			var memo = createTip("g1","x:"+left+" y:"+top);
+  			memo.css("left",left-(memo.width()/2));
+  			memo.css("top",top);
+  			return false;
+  		}
+  	})
+  	//拖动墙壁可滚动页面
+	$(".innerBox").mousedown(function(e){
+        if(e.target != this){
+        	return;
+        }
+        $('body').bind("selectstart",function(){return false});
+        _touch=true;
+        _target = this;
+        _stop = $(document).scrollTop();
+        _sleft = $(document).scrollLeft();
+        _x=e.pageX;
+        _y=e.pageY;
+	});
+	
+	var _move=false;//移动标记
+	var _x,_y;//鼠标离控件左上角的相对位置
+	var _target;
+	
+	var memos = $(".memo");
+	var zindex = 1000;
+	
+	memos.live("click",function(){
+    	// $(this).css("zIndex",zindex++);
+    }).live("dblclick",function(e){
+    	//双击文本可进行编辑
+  	  if($(e.target).is(".text")){
+		  $(e.target).attr("contenteditable",true)
+		  .focusout(function(e){
+			  $(this).attr("contenteditable",false);
+			  $(this).unbind("focusout");
+		  });
+	  }
+	}).live("mousedown",function(e){
+		//拖动Tip
+    	$(this).css("zIndex",zindex++);
+        if(!$(e.target).is(".pin")){
+        	return;
+        }
+        _move=true;
+        _target = this;
+        $('body').bind("selectstart",function(){return false});
+        _x=e.pageX-$(this).position().left;
+        _y=e.pageY-$(this).position().top;
+        $(this).fadeTo(20, 0.25);//点击后开始拖动并透明显示
+    });
+	
+    $(document).mousemove(function(e){
+        if(_move && _target){
+            var x=e.pageX-_x;//移动时根据鼠标位置计算控件左上角的绝对位置
+            var y=e.pageY-_y;
+            $(_target).css({top:y,left:x});//控件新位置
+       		return;
+        }
+        if(_touch){
+            var x=e.pageX-_x;
+            var y=e.pageY-_y;
+            $(document).scrollLeft(_sleft - x/2);
+            $(document).scrollTop(_stop - y/2);
+        	return;
+        }
+    }).mouseup(function(){
+    	if(_move){
+    		$(_target).fadeTo("fast", 1);//松开鼠标后停止移动并恢复成不透明
+    		_move=false;
+    	}
+    	if(_touch){
+    		_touch = false;
+    	}
+    	$('body').unbind("selectstart");
+   		_target=null;
+  	});
+    
+    
+  	//创建一些demo
+	$.each(["aqua","blue","green","orange","purple","red","yellow","g1","g2","g3","g4","g5","g6"],function(index,item){
+		var memo = createTip(item,"theme:"+item +" 知名日本电信运营商NTT docomo出品的一款精致备忘应用，界面完全模拟软木便签板，集成了多彩便签、日历、地图定位和分享功能，还可以根据不同的时间和空间组合来设置备忘提醒。");
+		memo.css("left",index % 7 * 200 );
+		memo.css("top",parseInt(index/7)*200);
+	})
+});
+</script>
+</body>
+</html>
